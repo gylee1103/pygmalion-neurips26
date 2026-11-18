@@ -160,18 +160,16 @@
                 </span>
 
                 <span class="link-block">
-                  <a href="https://github.com/gylee1103/neurips-clay-translator" target="_blank" rel="noopener"
-                     class="external-link button is-normal is-rounded is-dark">
+                  <a class="external-link button is-normal is-rounded is-dark" title="Code release is being prepared" aria-disabled="true" style="cursor: default; opacity: 0.75;">
                     <span class="icon"><i class="fab fa-github"></i></span>
-                    <span>Code: Image-to-Clay</span>
+                    <span>Code: Image-to-Clay (coming soon)</span>
                   </a>
                 </span>
 
                 <span class="link-block">
-                  <a href="https://github.com/gylee1103/neurips-clay-refgs" target="_blank" rel="noopener"
-                     class="external-link button is-normal is-rounded is-dark">
+                  <a class="external-link button is-normal is-rounded is-dark" title="Code release is being prepared" aria-disabled="true" style="cursor: default; opacity: 0.75;">
                     <span class="icon"><i class="fab fa-github"></i></span>
-                    <span>Code: Clay-guided Gaussians</span>
+                    <span>Code: Clay-guided Gaussians (coming soon)</span>
                   </a>
                 </span>
               </div>
@@ -264,14 +262,34 @@
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Results</h2>
 
-      <h3 class="title is-4">Image-to-clay translation</h3>
-      <div class="figure-block">
-        <img src="static/images/clay_translation.jpg" alt="Input reflective views of Glossy Synthetic objects on top and their translated clay images below">
-      </div>
-      <p class="figure-caption has-text-justified">
-        Top: input RGB views from Glossy Synthetic. Bottom: translated clay images. Regions reflecting the same environment
-        lighting are translated into consistent tones across views.
+      <h3 class="title is-4">Multi-view image-to-clay translation</h3>
+      <p class="figure-caption has-text-justified" style="margin-bottom: 1rem;">
+        <span class="labels">Left: input views &nbsp;|&nbsp; Right: translated clay views.</span>
+        Views are played in camera-path order. The translator keeps silhouettes and a consistent clay tone across views
+        while removing the view-dependent reflections.
       </p>
+      <div class="columns is-multiline is-variable is-2">
+        <div class="column is-half">
+          <video autoplay muted loop playsinline preload="metadata" style="width: 100%; border-radius: 6px; display: block;" aria-label="Input and clay views of the gardenspheres scene">
+            <source src="static/videos/translation_gardenspheres.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-half">
+          <video autoplay muted loop playsinline preload="metadata" style="width: 100%; border-radius: 6px; display: block;" aria-label="Input and clay views of the toaster scene">
+            <source src="static/videos/translation_toaster.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-half">
+          <video autoplay muted loop playsinline preload="metadata" style="width: 100%; border-radius: 6px; display: block;" aria-label="Input and clay views of the coral scene">
+            <source src="static/videos/translation_coral.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-half">
+          <video autoplay muted loop playsinline preload="metadata" style="width: 100%; border-radius: 6px; display: block;" aria-label="Input and clay views of the angel object">
+            <source src="static/videos/translation_angel.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
 
       <h3 class="title is-4" style="margin-top: 2.5rem;">Reflective reconstruction</h3>
       <div class="figure-block">
@@ -282,16 +300,30 @@
         Our clay-guided supervision yields cleaner geometry, which in turn produces sharper and more faithful reflections.
       </p>
 
-      <h3 class="title is-4" style="margin-top: 2.5rem;">Clay images as geometric supervision</h3>
-      <div class="columns is-centered">
-        <div class="column is-three-fifths">
-          <div class="figure-block">
-            <img src="static/images/clay_consistency.jpg" alt="Clay images preserve object silhouettes and view-consistent appearance">
-          </div>
-          <p class="figure-caption has-text-justified">
-            Clay images preserve object silhouettes and view-consistent appearance while removing the view-dependent
-            reflections, which is what makes them usable as a reflection-free geometric target.
-          </p>
+      <h3 class="title is-4" style="margin-top: 2.5rem;">Reconstructed scenes</h3>
+      <p class="figure-caption has-text-justified" style="margin-bottom: 1rem;">
+        <span class="labels">Rendered RGB &nbsp;|&nbsp; clay branch &nbsp;|&nbsp; normals,</span> rendered from our trained models along a camera orbit.
+      </p>
+      <div class="columns is-multiline is-variable is-2">
+        <div class="column is-half">
+          <video autoplay muted loop playsinline preload="metadata" style="width: 100%; border-radius: 6px; display: block;" aria-label="Orbit rendering of the reconstructed gardenspheres scene: RGB, clay and normals">
+            <source src="static/videos/orbit_gardenspheres.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-half">
+          <video autoplay muted loop playsinline preload="metadata" style="width: 100%; border-radius: 6px; display: block;" aria-label="Orbit rendering of the reconstructed toaster scene: RGB, clay and normals">
+            <source src="static/videos/orbit_toaster.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-half">
+          <video autoplay muted loop playsinline preload="metadata" style="width: 100%; border-radius: 6px; display: block;" aria-label="Orbit rendering of the reconstructed coral scene: RGB, clay and normals">
+            <source src="static/videos/orbit_coral.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-half">
+          <video autoplay muted loop playsinline preload="metadata" style="width: 100%; border-radius: 6px; display: block;" aria-label="Orbit rendering of the reconstructed angel object: RGB, clay and normals">
+            <source src="static/videos/orbit_angel.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
     </div>
@@ -301,18 +333,12 @@
   <section class="section">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Code</h2>
-      <div class="content section-intro">
-        <ul>
-          <li>
-            <a href="https://github.com/gylee1103/neurips-clay-translator" target="_blank" rel="noopener">neurips-clay-translator</a>:
-            multi-view image-to-clay translation. Inference and training scripts for the clay IC-LoRA on LTX-2.
-          </li>
-          <li>
-            <a href="https://github.com/gylee1103/neurips-clay-refgs" target="_blank" rel="noopener">neurips-clay-refgs</a>:
-            clay-guided reflective Gaussian splatting, built on
-            <a href="https://github.com/wen-yuan-zhang/MaterialRefGS" target="_blank" rel="noopener">MaterialRefGS</a>.
-          </li>
-        </ul>
+      <div class="content section-intro has-text-centered">
+        <p>
+          Code for the multi-view image-to-clay translator and for the clay-guided reflective Gaussian splatting
+          (built on <a href="https://github.com/wen-yuan-zhang/MaterialRefGS" target="_blank" rel="noopener">MaterialRefGS</a>)
+          is coming soon.
+        </p>
       </div>
     </div>
   </section>
