@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Pygmalion Effect in Vision: Image-to-Clay Translation for Reflective Geometry Reconstruction">
+  <meta name="description" content="Translating reflective multi-view images into clay-like renderings with a video diffusion LoRA, then using them as reflection-free geometric supervision for reflective Gaussian splatting. NeurIPS 2026.">
+  <meta name="keywords" content="reflective object reconstruction, Gaussian splatting, image-to-clay translation, video diffusion, LTX-2, inverse rendering, BRDF, NeurIPS 2026">
+  <meta name="author" content="Gayoung Lee, Junho Kim, Jin-Hwa Kim, Junmo Kim">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="NAVER AI Lab">
+  <meta property="og:title" content="Pygmalion Effect in Vision: Image-to-Clay Translation for Reflective Geometry Reconstruction">
+  <meta property="og:description" content="Translating reflective multi-view images into clay-like renderings, then using them as reflection-free geometric supervision for reflective Gaussian splatting. NeurIPS 2026.">
+  <meta property="og:url" content="https://gylee1103.github.io/pygmalion-neurips26/">
+  <meta property="og:image" content="https://gylee1103.github.io/pygmalion-neurips26/static/images/social_preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Reflective input images, their clay translations, and the reconstructed reflective surfaces">
+  <meta property="article:published_time" content="2025-11-26T00:00:00.000Z">
+  <meta property="article:author" content="Gayoung Lee">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="3D reconstruction">
+  <meta property="article:tag" content="Gaussian splatting">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pygmalion Effect in Vision: Image-to-Clay Translation for Reflective Geometry Reconstruction">
+  <meta name="twitter:description" content="Translating reflective multi-view images into clay-like renderings, then using them as reflection-free geometric supervision for reflective Gaussian splatting. NeurIPS 2026.">
+  <meta name="twitter:image" content="https://gylee1103.github.io/pygmalion-neurips26/static/images/social_preview.jpg">
+  <meta name="twitter:image:alt" content="Reflective input images, their clay translations, and the reconstructed reflective surfaces">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="Pygmalion Effect in Vision: Image-to-Clay Translation for Reflective Geometry Reconstruction">
+  <meta name="citation_author" content="Lee, Gayoung">
+  <meta name="citation_author" content="Kim, Junho">
+  <meta name="citation_author" content="Kim, Jin-Hwa">
+  <meta name="citation_author" content="Kim, Junmo">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="Advances in Neural Information Processing Systems (NeurIPS)">
+  <meta name="citation_arxiv_id" content="2511.21098">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2511.21098">
+
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>Pygmalion Effect in Vision: Image-to-Clay Translation for Reflective Geometry Reconstruction</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+
+  <!-- Critical CSS -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <!-- Non-critical CSS -->
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- JavaScript -->
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <style>
+    .figure-block { margin: 0 auto; }
+    .figure-block img { width: 100%; height: auto; display: block; border-radius: 6px; }
+    .figure-caption { margin-top: 0.75rem; font-size: 0.95rem; color: #4a4a4a; }
+    .figure-caption .labels { font-weight: 600; color: #363636; }
+    .affil-block { font-size: 1rem; margin-top: 0.25rem; }
+    .venue-block { font-size: 1.15rem; font-weight: 600; margin-top: 0.75rem; }
+    .section-intro { max-width: 820px; margin: 0 auto 1.5rem auto; }
+  </style>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Pygmalion Effect in Vision: Image-to-Clay Translation for Reflective Geometry Reconstruction",
+    "description": "Translating reflective multi-view images into clay-like renderings with a video diffusion LoRA, then using them as reflection-free geometric supervision for reflective Gaussian splatting.",
+    "author": [
+      {"@type": "Person", "name": "Gayoung Lee", "affiliation": [{"@type": "Organization", "name": "NAVER AI Lab"}, {"@type": "Organization", "name": "KAIST"}]},
+      {"@type": "Person", "name": "Junho Kim", "affiliation": {"@type": "Organization", "name": "NAVER AI Lab"}},
+      {"@type": "Person", "name": "Jin-Hwa Kim", "affiliation": [{"@type": "Organization", "name": "NAVER AI Lab"}, {"@type": "Organization", "name": "SNU AIIS"}]},
+      {"@type": "Person", "name": "Junmo Kim", "affiliation": {"@type": "Organization", "name": "KAIST"}}
+    ],
+    "datePublished": "2025-11-26",
+    "publisher": {"@type": "Organization", "name": "Advances in Neural Information Processing Systems (NeurIPS)"},
+    "url": "https://gylee1103.github.io/pygmalion-neurips26/",
+    "image": "https://gylee1103.github.io/pygmalion-neurips26/static/images/social_preview.jpg",
+    "sameAs": "https://arxiv.org/abs/2511.21098",
+    "keywords": ["reflective object reconstruction", "Gaussian splatting", "image-to-clay translation", "video diffusion", "inverse rendering"],
+    "isAccessibleForFree": true
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Pygmalion Effect in Vision: Image-to-Clay Translation for Reflective Geometry Reconstruction</h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Gayoung Lee<sup>1,2</sup>,</span>
+              <span class="author-block">Junho Kim<sup>1</sup>,</span>
+              <span class="author-block">Jin-Hwa Kim<sup>1,3&dagger;</sup>,</span>
+              <span class="author-block">Junmo Kim<sup>2&dagger;</sup></span>
+            </div>
+
+            <div class="is-size-5 publication-authors affil-block">
+              <span class="author-block"><sup>1</sup>NAVER AI Lab &nbsp;&nbsp; <sup>2</sup>KAIST &nbsp;&nbsp; <sup>3</sup>SNU AIIS</span>
+              <span class="eql-cntrb"><small><br><sup>&dagger;</sup>Corresponding authors</small></span>
+            </div>
+
+            <div class="venue-block">NeurIPS 2026</div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2511.21098" target="_blank" rel="noopener"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2511.21098" target="_blank" rel="noopener"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://github.com/gylee1103/neurips-clay-translator" target="_blank" rel="noopener"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code: Image-to-Clay</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://github.com/gylee1103/neurips-clay-refgs" target="_blank" rel="noopener"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code: Clay-guided Gaussians</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div class="figure-block">
+          <img src="static/images/teaser.jpg" alt="Reflective input images, clay translations, our reconstruction and the MaterialRefGS baseline on the sedan and gardenspheres scenes">
+        </div>
+        <h2 class="subtitle has-text-centered figure-caption">
+          <span class="labels">(a) Ground truth &nbsp;|&nbsp; (b) Clay images &nbsp;|&nbsp; (c) Ours &nbsp;|&nbsp; (d) MaterialRefGS</span><br>
+          By translating reflective images (a) into clay-like renderings (b) for geometric guidance, our method produces sharper,
+          more accurate reflective-surface geometry (c) than a strong baseline (d).
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Understanding reflection remains a long-standing challenge in 3D reconstruction due to the entanglement of
+              appearance and geometry under view-dependent reflections. In this work, we present the <b>Pygmalion Effect in
+              Vision</b>, a novel framework that metaphorically &ldquo;sculpts&rdquo; reflective objects into clay-like forms
+              through image-to-clay translation. We then introduce a dual-branch design in which a BRDF-based reflective
+              branch and a clay-guided branch share the same Gaussian geometry but operate through independent rendering
+              paths. The clay-guided branch, supervised by the synthesized clay images, provides reflection-free geometric
+              guidance that complements the photometric supervision of the BRDF branch. Experiments on both synthetic and
+              real datasets show consistent improvements in both geometry and photometric metrics. Beyond technical gains,
+              our framework reveals that <i>seeing by unshining</i>, translating radiance into neutrality, can serve as a
+              powerful inductive bias for reflective object geometry learning.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Method -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+
+      <div class="content has-text-justified section-intro">
+        <p>
+          The framework has two parts. A <b>multi-view image-to-clay translator</b> turns the reflective input views of a
+          scene into clay-like renderings of the same views. A <b>dual-branch Gaussian splatting</b> model then reconstructs
+          the scene: a BRDF-based reflective branch is supervised by the input photos, and a clay-guided branch is
+          supervised by the translated clay images. Both branches share one set of Gaussian geometry, so the reflection-free
+          clay supervision shapes the surface while the reflective branch learns material and lighting.
+        </p>
+      </div>
+
+      <h3 class="title is-4">Dual-branch reflective Gaussian splatting</h3>
+      <div class="figure-block">
+        <img src="static/images/overview.png" alt="Overview of the dual-branch pipeline: shared Gaussian geometry rendered through a clay branch and a BRDF branch">
+      </div>
+      <p class="figure-caption has-text-justified">
+        A BRDF-based reflective branch and a clay-guided branch share the same Gaussian geometry. Clay-like images provide
+        reflection-free supervision during early training, stabilizing geometry and improving surface normals.
+      </p>
+
+      <h3 class="title is-4" style="margin-top: 2.5rem;">Multi-view image-to-clay translation</h3>
+      <div class="figure-block">
+        <img src="static/images/mvimg2clay.png" alt="Pipeline of the LTX-2-based multi-view image-to-clay translation model with anchor views across chunks">
+      </div>
+      <p class="figure-caption has-text-justified">
+        We arrange multi-view images along the temporal axis of a video diffusion model (LTX-2) and fine-tune a LoRA,
+        repurposing temporal coherence as cross-view consistency. For scenes split into multiple chunks, anchor views and
+        their clay translations from the first chunk are used as conditioning to keep later chunks consistent.
+      </p>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Results</h2>
+
+      <h3 class="title is-4">Image-to-clay translation</h3>
+      <div class="figure-block">
+        <img src="static/images/clay_translation.jpg" alt="Input reflective views of Glossy Synthetic objects on top and their translated clay images below">
+      </div>
+      <p class="figure-caption has-text-justified">
+        Top: input RGB views from Glossy Synthetic. Bottom: translated clay images. Regions reflecting the same environment
+        lighting are translated into consistent tones across views.
+      </p>
+
+      <h3 class="title is-4" style="margin-top: 2.5rem;">Reflective reconstruction</h3>
+      <div class="figure-block">
+        <img src="static/images/qualitative.jpg" alt="Qualitative comparison on real captures: ground truth, ours, MaterialRefGS, RGS and Ref-GS">
+      </div>
+      <p class="figure-caption has-text-justified">
+        <span class="labels">GT &nbsp;|&nbsp; Ours &nbsp;|&nbsp; MaterialRefGS &nbsp;|&nbsp; RGS &nbsp;|&nbsp; Ref-GS.</span>
+        Our clay-guided supervision yields cleaner geometry, which in turn produces sharper and more faithful reflections.
+      </p>
+
+      <h3 class="title is-4" style="margin-top: 2.5rem;">Clay images as geometric supervision</h3>
+      <div class="columns is-centered">
+        <div class="column is-three-fifths">
+          <div class="figure-block">
+            <img src="static/images/clay_consistency.jpg" alt="Clay images preserve object silhouettes and view-consistent appearance">
+          </div>
+          <p class="figure-caption has-text-justified">
+            Clay images preserve object silhouettes and view-consistent appearance while removing the view-dependent
+            reflections, which is what makes them usable as a reflection-free geometric target.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Code</h2>
+      <div class="content section-intro">
+        <ul>
+          <li>
+            <a href="https://github.com/gylee1103/neurips-clay-translator" target="_blank" rel="noopener">neurips-clay-translator</a>:
+            multi-view image-to-clay translation. Inference and training scripts for the clay IC-LoRA on LTX-2.
+          </li>
+          <li>
+            <a href="https://github.com/gylee1103/neurips-clay-refgs" target="_blank" rel="noopener">neurips-clay-refgs</a>:
+            clay-guided reflective Gaussian splatting, built on
+            <a href="https://github.com/wen-yuan-zhang/MaterialRefGS" target="_blank" rel="noopener">MaterialRefGS</a>.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@inproceedings{lee2026pygmalion,
+  title     = {Pygmalion Effect in Vision: Image-to-Clay Translation for Reflective Geometry Reconstruction},
+  author    = {Lee, Gayoung and Kim, Junho and Kim, Jin-Hwa and Kim, Junmo},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2026},
+  url       = {https://arxiv.org/abs/2511.21098}
+}</code></pre>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a>,
+              which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+              This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+              Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
